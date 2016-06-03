@@ -1,0 +1,32 @@
+{
+  "squareA": {
+    "h1":,
+    "h2":,
+    "w1":,
+    "w2"
+  },
+  "squareB": {
+    "h1":,
+    "h2":,
+    "w1":,
+    "w2"
+  }
+}
+
+
+[
+  {
+      "squareABottom": 0,
+      "squareATop": 5,
+      "squareALeft": 0,
+      "squareARight": 5,
+      "squareBBottom": 0,
+      "squareBTop": 5,
+      "squareBLeft": 0,
+      "squareBRight": 5
+  }
+]
+
+1 หาว่ามีการซ้อนทับกันในแนวตั้งหรือไม่
+  yes: หาว่ามีการซ้อนทั้บแนวนอนหรือไม่
+    yes: รูปซ้อนทับกัน
