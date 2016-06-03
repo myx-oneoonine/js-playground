@@ -1,55 +1,71 @@
 exports.squareOverlab = function(req, res) {
 
   console.log(req.body);
-  console.log("squareALeft:"+ req.body.squareALeft);
-  console.log("squareARight:"+ req.body.squareARight);
-  console.log("squareATop:"+ req.body.squareATop);
-  console.log("squareABottom:"+ req.body.squareABottom);
-  console.log("squareBLeft:"+ req.body.squareBLeft);
-  console.log("squareBRight:"+ req.body.squareBRight);
-  console.log("squareBTop:"+ req.body.squareBTop);
-  console.log("squareBBottom:"+ req.body.squareBBottom);
+  console.log("squareALeft:"+ req.body.squareA.left);
+  console.log("squareARight:"+ req.body.squareA.right);
+  console.log("squareATop:"+ req.body.squareA.top);
+  console.log("squareABottom:"+ req.body.squareA.bottom);
+  console.log("squareBLeft:"+ req.body.squareB.left);
+  console.log("squareBRight:"+ req.body.squareB.right);
+  console.log("squareBTop:"+ req.body.squareB.top);
+  console.log("squareBBottom:"+ req.body.squareB.bottom);
 
-  var left = 0, right = 0, top = 0, bottom = 0 ,area = 0;
+  var tmpLeft = 0, tmpRight = 0, tmpTop = 0, tmpBottom = 0 ,area = 0;
+  function square(left, right, top, bottom) {
+    this.left = left;
+    this.right = right;
+    this.top = top;
+    this.bottom = bottom;
+  }
+  var squareA = new square(req.body.squareA.left, req.body.squareA.right, req.body.squareA.top, req.body.squareA.bottom);
+  var squareB = new square(req.body.squareB.left, req.body.squareB.right, req.body.squareB.top, req.body.squareB.bottom);
+  // console.log(">>>>>>>>>>>>>>>>>>>>>>>>");
+  // console.log("squareALeft:"+ squareA.left);
+  // console.log("squareARight:"+ squareA.right);
+  // console.log("squareATop:"+ squareA.top);
+  // console.log("squareABottom:"+ squareA.bottom);
+  // console.log("squareBLeft:"+ squareB.left);
+  // console.log("squareBRight:"+ squareB.right);
+  // console.log("squareBTop:"+ squareB.top);
+  // console.log("squareBBottom:"+ squareB.bottom);
 
   function horizonOverlab() {
-    if (req.body.squareBLeft <= req.body.squareALeft && req.body.squareALeft <= req.body.squareBRight) {
-      left = req.body.squareALeft;
+    if (squareB.left <= squareA.left && squareA.left <= squareB.right) {
+      tmpLeft = squareA.left;
     }
-    else if (req.body.squareALeft <= req.body.squareBLeft && req.body.squareBLeft <= req.body.squareARight) {
-      left = req.body.squareBLeft;
+    else if (squareA.left <= squareB.left && squareB.left <= squareA.right) {
+      tmpLeft = squareB.left;
     }
 
-    if (req.body.squareBLeft <= req.body.squareARight && req.body.squareARight <= req.body.squareBRight) {
-      right = req.body.squareARight;
+    if (squareB.left <= squareA.right && squareA.right <= squareB.right) {
+      tmpRight = squareA.right;
     }
-    else if (req.body.squareALeft <= req.body.squareBRight && req.body.squareBRight <= req.body.squareARight) {
-      right = req.body.squareARight;
+    else if (squareA.left <= squareB.right && squareB.right <= squareA.right) {
+      tmpRight = squareB.right;
     }
   }
 
   function verticalOverlab() {
-    if (req.body.squareBBottom <= req.body.squareABottom && req.body.squareABottom <= req.body.squareBTop) {
-      bottom = req.body.squareABottom;
+    if (squareB.bottom <= squareA.bottom && squareA.bottom <= squareB.top) {
+      tmpBottom = squareA.bottom;
     }
-    else if (req.body.squareABottom <= req.body.squareBBottom && req.body.squareBBottom <= req.body.squareATop) {
-      bottom = req.body.squareBBottom;
-      top = req.body.squareATop;
+    else if (squareA.bottom <= squareB.bottom && squareB.bottom <= squareA.top) {
+      tmpBottom = squareB.bottom;
     }
 
-    if (req.body.squareBBottom <= req.body.squareATop && req.body.squareATop <= req.body.squareBTop) {
-      top = req.body.squareATop;
+    if (squareB.bottom <= squareA.top && squareA.top <= squareB.top) {
+      tmpTop = squareA.top;
     }
-    else if (req.body.squareABottom <= req.body.squareBTop && req.body.squareBTop <= req.body.squareATop) {
-      top = req.body.squareBTop;
+    else if (squareA.bottom <= squareB.top && squareB.top <= squareA.top) {
+      tmpTop = squareB.top;
     }
   }
 
   verticalOverlab();
   horizonOverlab();
 
-  console.log('right:'+ right + '\nleft:' + left + '\ntop:' + top + '\nbottom:' + bottom);
-  area = (right - left) * (top - bottom);
+  console.log('right:'+ tmpRight + '\nleft:' + tmpLeft + '\ntop:' + tmpTop + '\nbottom:' + tmpBottom);
+  area = (tmpRight - tmpLeft) * (tmpTop - tmpBottom);
 
   res.json({
     'overlab': area
