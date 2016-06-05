@@ -16,6 +16,4 @@ console.log("title:" + book1.title);
 console.log("author:" + book1.author);
 console.log("price:" + book1.price);
 
-
-JSON.stringify(book1);
 console.log(book1);
